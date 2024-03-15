@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Diana's Portfolio</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-6wzE4B0trg8V/XYKMXflpGfkNt4zx1+L50fFVTrmLGJW6pnG2Z1loJGyp5WsMpp0FVrJibFiHMdb5BtkxZX9Ng==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<style>
+		body {
+            background-color: #fff;
+        }
+        nav {
+            background-color: #333333!important;
+            padding: 0 5%;
+        }
+        .bg-dark {
+            background-color: #333333!important;
+        }
+        .navbar-brand, .nav-link {
+            font-size: 1.5em;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffffd6;
+        }
+        .navbar-nav .nav-item {
+            text-transform: lowercase;
+        }
+        .navbar-nav .nav-item a.nav-link {
+            display: block;
+        }
+        .navbar-nav .nav-item a.nav-link:hover,
+        .navbar-nav .nav-item a.nav-link.active {
+            color: #757575;
+        }
+        #accordion-nav {
+            background-color: #222222;
+            display: none;
+        }
+        section {
+            position: relative;
+            min-height: calc(100vh - 56px); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease; 
+            border-bottom: #dddddd solid 1px;
+        }
+        #about { 
+            padding: 50px 0;
+        }
+        #resume { 
+            padding: 0; 
+            min-height: 80vh;
+        }
+        #resume h2 {
+            color: #333333;
+            text-rendering: optimizelegibility;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            font-size: 4em;
+            line-height: 0.75;
+            letter-spacing: -0.06em;
+            margin: 0 auto 0.5em auto;
+        }
+        footer {
+            background-color: #333333;
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+        }
+        footer p {
+            margin: 0;
+            font-weight: 400;
+        }
+        .about-content {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #333;
+        }
+        .section-show {
+            opacity: 1; 
+        }
+        .banner-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .banner-section img {
+            max-width: 45%;
+            margin-bottom: 20px;
+        }
+        .banner-section .contact-photo {
+            max-width: 100%;
+            height: 95vh;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin-bottom: 0;
+        }
+        .banner-section .info {
+            max-width: 45%;
+            text-align: left;
+        }
+        .banner-section .info h1 {
+            margin: 0;
+            color: #333333;
+            text-rendering: optimizelegibility;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            font-size: 5rem;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+        }
+        .banner-section .info h3 {
+            margin-top: 0;
+            color: #757575;
+            line-height: 1.3;
+            font-weight: 200;
+        }
+        .banner-section .info p {
+            margin-bottom: 2.4rem;
+            line-height: 1.5;
+            color: #333333;
+            margin-top: 2em;
+            font-size: 1.1em;
+        }
+        .image-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 2em 0;
+        }
+        .image-grid img {
+            width: 146px;
+            height: 97px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 5px solid white;
+            border-radius: 4px;
+            -moz-background-clip: padding;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            -webkit-box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.2);
+        }
+        .image-grid img:hover {
+            cursor: pointer;
+        }
+        .image-container {
+            position: relative;
+            margin: 10px;
+        }
+        .tooltip {
+            width: 100%;
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s linear;
+            text-align: center;
+            font-size: 10px;
+        }
+        .image-container:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .stats-section {
+            pointer-events: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 50px;
+            width: 100%;
+            padding: 3em 6em 0;
+        }
+        .stats-section .row {
+            width: 100%;
+        }
+        .stats-section .info {
+            max-width: 100%;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .stats-section .info h2 {
+            width: 100px;
+            margin: 0;
+            color: #333333;
+            text-rendering: optimizelegibility;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            font-size: 2em;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+        }
+        .stats-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .stats-section img {
+            margin-bottom: 20px;
+            width: 400px;
+            height: auto;
+        }
+        .icon-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2em;
+        }
+        .icon-container img {
+            width: 40%;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease; 
+            border-radius: 15px;
+        }
+        .icon-container img:hover {
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+        .image-collage {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+        }
+        .image-collage .image-container {
+            position: relative;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        .image-collage .image-container:hover {
+            cursor: pointer;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .image-collage img {
+            width: 200px;
+            height: auto;
+            border-radius: 5px;
+            border: 5px solid #fafafa;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1), 0px -2px 2px rgba(0, 0, 0, 0.1);
+        }
+        .btn-secondary {
+            background-color: #333333;
+        }
+        .portfolio-container {
+            text-align: left;
+            padding: 5em 0;
+        }
+        .portfolio-container h1 {
+            margin: 0;
+            color: #333333;
+            text-rendering: optimizelegibility;
+            font-weight: 700;
+            margin-top: 1em;
+            margin-bottom: 0.8rem;
+            font-size: 5rem;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+        }
+        .portfolio-container h3 {
+            margin-top: 0;
+            color: #757575;
+            line-height: 1.3;
+            font-weight: 200;
+            width: 80%;
+        }
+        .portfolio-container p {
+            margin-bottom: 2.4rem;
+            line-height: 1.5;
+            color: #333333;
+            margin-top: 2em;
+            font-size: 1.1em;
+            width: 80%;
+        }
+        .portfolio-container a {
+            color: #757575;
+            line-height: 1.5;
+            margin-top: 2em;
+            font-size: 1.2em;
+            font-weight: 200;
+            text-decoration: underline;
+        }
+        .portfolio-container a:hover {
+            color: #535353;
+        }
+        .portfolio-container label {
+            font-size: 1.5em;
+            margin-right: 0.5em;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            cursor: pointer;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .card img {
+            height: 100px;
+            object-fit: cover;
+            border-bottom: #dddddd solid 1px;
+        }
+        .card-body {
+            padding: 1.5em;
+        }
+        .card-title {
+            margin: 0;
+            padding: 0;
+            color: #323232;
+            font-size: 1.2em;
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+        }
+        .card-text {
+            color: #757575;
+            margin: 0;
+            padding-top: 5px;
+            font-weight: 200;
+            line-height: 1!important;
+            margin-top: 15px!important;
+        }
+        #portfolioModal img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1em;
+            border: #dddddd solid 1px;
+        }
+        #portfolioModal .modal-body { 
+            text-align: left;
+        }
+        #portfolioModal .modal-body div { 
+            width: 100%;
+            text-align: center;
+            margin: 3em 0 0.5em 0;
+        }
+        #portfolioModal .modal-body div label {
+            font-size: 1.5em;
+            margin-right: 0.5em;
+        }
+        #portfolioModal .modal-content .modal-title {
+            margin: 0;
+            padding: 0;
+            color: #323232;
+            font-size: 1.2em;
+            font-weight: 700;
+            letter-spacing: -0.06em;
+        }
+        #portfolioModalSubtitle {
+            color: #757575;
+            font-weight: 200;
+            margin-bottom: 2.5em;
+        }
+        #portfolioModalLink {
+            text-align: center;
+            color: #757575;
+            line-height: 1.5;
+            margin-top: 2em;
+            font-size: 1.2em;
+            font-weight: 200;
+            text-decoration: underline;
+        }
+        #portfolioModalLink:hover {
+            color: #535353;
+        }
+        .navbar-collapse {
+            text-align: center;
+        }
+        .navbar-collapse .navbar-nav .nav-item {
+            height: auto;
+            padding: 1em;
+        }
+        @media (max-width: 768px) {
+            .navbar-toggler {
+                color: #fff;
+            }
+            .navbar-nav .nav-item {
+                height: 6.4rem;
+                list-style: none;
+                display: block;
+                border-top: #212121 solid 1px;
+                border-bottom: #363636 solid 1px;
+                width: 100%;
+            }
+            .banner-section img {
+                height: auto!important;
+                width: 90%!important;
+                z-index: -1;
+            }
+            .banner-section .info {
+                max-width: 100%;
+                margin-top: 20px;
+            }
+            .stats-section .info {
+                max-width: 100%;
+                margin-top: 20px;
+            }
+            .icon-container {
+                align-items: center;
+                align-content: center;
+                flex-wrap: wrap;
+            }
+            .icon-container img {
+                width: 80%; 
+                margin-bottom: 10px; 
+            }
+            .image-collage {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            #resume .container {
+                margin: 3em 1em;
+            }
+            .portfolio-container {
+                text-align: left;
+                padding: 3em 1em;
+            }
+            .portfolio-container-div {
+                padding-bottom: 3em;
+            }
+            #portfolio {
+                padding-bottom: 3em;
+            }
+            #me-img {
+                height: 100%!important;
+                max-width: 100%;
+            }
+            .stats-section {
+                padding: 3em 1em;
+            }
+            .stats-section img {
+                width: 100%;
+            }
+            .portfolio-container h1 {
+                margin-top: 0;
+
+            }
+            #contact {
+                min-height: 70vh;
+            }
+            .image-collage img {
+                width: 100%;
+            }
+        }
+        /* ANIMATIONS */
+        .tracking-in-expand {
+            -webkit-animation: tracking-in-expand 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+                    animation: tracking-in-expand 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        }
+        .fade-in {
+            -webkit-animation: fade-in 2.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+                    animation: fade-in 2.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+        }
+        .slide-in-right {
+            -webkit-animation: slide-in-right 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                    animation: slide-in-right 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        }
+        @-webkit-keyframes tracking-in-expand {
+            0% {
+                letter-spacing: -0.5em;
+                opacity: 0;
+            }
+            40% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 1;
+            }
+            }
+            @keyframes tracking-in-expand {
+            0% {
+                letter-spacing: -0.5em;
+                opacity: 0;
+            }
+            40% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        @-webkit-keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+            }
+            @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes slide-in-right {
+            0% {
+                -webkit-transform: translateX(1000px);
+                        transform: translateX(1000px);
+                opacity: 0;
+            }
+            100% {
+                -webkit-transform: translateX(0);
+                        transform: translateX(0);
+                opacity: 1;
+            }
+            }
+            @keyframes slide-in-right {
+            0% {
+                -webkit-transform: translateX(1000px);
+                        transform: translateX(1000px);
+                opacity: 0;
+            }
+            100% {
+                -webkit-transform: translateX(0);
+                        transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+		
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+		<div class="container">
+			<a class="navbar-brand" href="#">DT</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="#about">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#portfolio">Portfolio</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#resume">Artwork</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#contact">Contact</a>
+					</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/DianaATHdz" target="_blank"><i class="fab fa-github"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.linkedin.com/in/dianatorreshedz/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<section id="about">
+		<div class="container">
+			<div class="banner-section">
+				<div class="info">
+					<h1 class="tracking-in-expand">Hey <br> I'm Diana!</h1>
+					<h3 class="fade-in">I'm a Web Developer based in México 🇲🇽</h3>
+					<p class="fade-in">Since 2020, I've been creating (and sometimes designing!) websites with love. My favorite framework is <b>React</b> and my favorite design tool is <b>Photoshop</b>.</p>
+					<p class="fade-in">If I'm not programming, you'll probably see me in any cafe drawing while I drink the sweetest drink ever.</p>
+				</div>
+				<img class="slide-in-right" id="me-img" src="https://i.imgur.com/wk8KP87.png" alt="That's me!!">
+			</div>
+			<div class="image-grid">
+				<div class="image-container">
+					<img src="https://i.imgur.com/eyuM7o4.png">
+					<span class="tooltip">Embroidery is a hobby that I really love</span>
+				</div>
+				<div class="image-container">
+					<img src="https://i.imgur.com/kIotJ2v.png">
+					<span class="tooltip">I'm the biggest Pan Dulce fan in the world!</span>
+				</div>
+				<div class="image-container">
+					<img src="https://i.imgur.com/7A5cmjW.jpeg">
+					<span class="tooltip">I like anime and videogames ૮ ˶ᵔ ᵕ ᵔ˶ ა</span>
+				</div>
+				<div class="image-container">
+					<img src="https://i.imgur.com/ENJGDjE.png">
+					<span class="tooltip">I took this photo in Gonzalez, Tamaulipas</span>
+				</div>
+				<div class="image-container">
+					<img src="https://i.imgur.com/gnNymth.png">
+					<span class="tooltip">A good Mexican eats any type of tacos</span>
+				</div>
+				<div class="image-container">
+					<img src="https://i.imgur.com/6BJgjZe.png">
+					<span class="tooltip">Going to a concert is Magical experience!</span>
+				</div>
+			</div>
+			<div class="stats-section">
+				<div class="row">
+                    <div class="col-md-3 col-6 order-md-1 order-1">
+                        <div class="info">
+                            <h2>Technical<br>Skills</h2>
+                            <ul>
+                                <li>Angular</li>
+                                <li>HTML</li>
+                                <li>Javascript</li>
+                                <li>Java</li>
+                                <li>Jquery</li>
+                                <li>NextJS</li>
+                                <li>Node</li>
+                                <li>React</li>
+                                <li>Typescript</li>
+                                <li>Vue</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 order-md-3 order-2">
+                        <div class="info">
+                            <h2>Design<br>Skills</h2>
+                            <ul>
+                                <li>Photoshop</li>
+                                <li>Figma</li>
+                                <li>AdobleXD</li>
+                                <li>Illustrator</li>
+                                <li>Procreate</li>
+                                <li>Clip Studio</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 order-md-2 order-3">
+                        <img src="https://i.imgur.com/735CBZU.png" alt="Pie chart yummy!!">
+                    </div>
+                </div>                
+			</div>
+		</div>
+	</section>
+
+	<section id="portfolio">
+        <div class="portfolio-container container">
+            <div class="row">
+                <div class="col-lg-6 portfolio-container-div">
+                    <h1>Portfolio.</h1>
+                    <h3>Check out some of the latest projects I worked on 🔎</h3>
+                    <p>I've worked for technology and marketing companies with a variety of different projects, including inscription systems, websites, and search engines.</p>
+                    <p><i>btw click the cards if you want to know more about the projects :-)</i></p>
+                    <span><label>📂 </label><a href="https://drive.google.com/file/d/1lbu2JcELQlG0yb4606jYS5HpgvJW1t7Z/view?usp=sharing" target="_blank" rel="noopener noreferrer">Download my Resume ↓</a></span>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-md-6 col-6 mb-4">
+                            <div class="card shadow-sm" onclick="openPortfolioModal('https://i.imgur.com/Poa222h.png', 'UNITEC Inscription System', 'Location: Mexico 🇲🇽', 'The UNITEC registration system project aimed to enhance the registration process for high school, university, and other higher education students across various UNITEC campuses. For this project, I created the mockup using Figma before implementing the system with the Vue.js framework.', 'https://inscripciones.unitec.mx/register/step/1')">
+                                <img src="https://i.imgur.com/Poa222h.png" class="card-img-top" alt="Imagen 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">UNITEC Inscription System</h5>
+                                    <p class="card-text">FrontEnd and UX/UI</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6 mb-4">
+                            <div class="card shadow-sm" onclick="openPortfolioModal('https://i.imgur.com/nIiHcKv.png', 'Fiesta Rewards Loyalty Program', 'Location: Mexico 🇲🇽', 'I had the opportunity to enhance the reward system of the Posadas Group. This project involved utilizing Liferay technology, HTML, CSS, JavaScript, and jQuery. I worked on both the login functionality and its dashboard post-login.', 'https://sso.posadas.com/auth/realms/Posadas/protocol/openid-connect/auth?client_id=MemberPortal&redirect_uri=https%3A%2F%2Fwallet.fiestarewards.com%2Fweb%2Fwallet&state=3c1063ae-2afa-47bc-80d6-28b55de17fde&response_mode=fragment&response_type=code&scope=openid&nonce=538154d1-25ca-4838-b26e-96067b0ec4e1&ui_locales=es')">
+                                <img src="https://i.imgur.com/nIiHcKv.png" class="card-img-top" alt="Imagen 2">
+                                <div class="card-body">
+                                    <h5 class="card-title">Fiesta Rewards Loyalty Program</h5>
+                                    <p class="card-text">FrontEnd</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6 mb-4">
+                            <div class="card shadow-sm" onclick="openPortfolioModal('https://i.imgur.com/iRJ14PS.png', 'FilterEasy','Location: USA 🇺🇸','FilterEasy is a company dedicated to the sale and subscription of air conditioning and refrigerator filters. It operates nationwide and is one of the largest filter companies in the country. In this project, I had the opportunity to develop the page layout and contribute to its functionality using the React.js framework.','https://filtereasy.com/')">
+                                <img src="https://i.imgur.com/iRJ14PS.png" class="card-img-top" alt="Imagen 3">
+                                <div class="card-body">
+                                    <h5 class="card-title">FilterEasy</h5>
+                                    <p class="card-text">FullStack</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6 mb-4">
+                            <div class="card shadow-sm" onclick="openPortfolioModal('https://i.imgur.com/lqPVwYN.png', 'Telcel Search Engine', 'Location: Mexico 🇲🇽', 'Telcel is one of the largest companies in Mexico, and I had the opportunity to participate in enhancing its search bar by adding instant search functionality to display results instantly! Additionally, I worked on creating the results page, which includes filters and other components built with the Vue.js framework. It was one of my most enjoyable projects!', 'https://www.telcel.com/')">
+                                <img src="https://i.imgur.com/lqPVwYN.png" class="card-img-top" alt="Imagen 4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Telcel Search Engine</h5>
+                                    <p class="card-text">FrontEnd</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-6 mb-4">
+                            <div class="card shadow-sm" onclick="openPortfolioModal('https://i.imgur.com/LZ8XA6W.png', 'Adsmovi Landing Page', 'Location: Mexico 🇲🇽', 'Adsmovi was the first company where I completed my internship! It is a marketing company specializing in web page creation. Located in San Pedro Garza, Nuevo Leon, during this project, I had the opportunity to design its Landing Page. All elements were crafted in Photoshop and assembled using HTML and JQuery.', 'https://www.adsmovi.com/')">
+                                <img src="https://i.imgur.com/LZ8XA6W.png" class="card-img-top" alt="Imagen 5">
+                                <div class="card-body">
+                                    <h5 class="card-title">Adsmovi Landing Page</h5>
+                                    <p class="card-text">FrontEnd and UX/UI</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="portfolioModal" tabindex="-1" role="dialog" aria-labelledby="portfolioModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="portfolioModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="#" class="img-fluid mx-auto d-block" id="portfolioModalImage" alt="Modal Image">
+                        <h6 id="portfolioModalSubtitle"></h6>
+                        <p id="portfolioModalDescription"></p>
+                        <div><span><label>💻</label><a href="#" id="portfolioModalLink" target="_blank" rel="noopener noreferrer">visit the page ↓</a></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+	<section id="resume">
+		<div class="container">
+			<h2>Some of my<br>artwork</h2>
+			<div class="row image-collage">
+                <div class="col-lg-2 col-md-4 col-xs-6 col-6">
+                    <div class="image-container">
+                        <img src="https://i.imgur.com/AVA0gJv.png" alt="" onclick="openResumeModal('https://i.imgur.com/AVA0gJv.png')">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-xs-6 col-6">
+                    <div class="image-container">
+                        <img src="https://i.imgur.com/eL7ZFOB.png" alt="" onclick="openResumeModal('https://i.imgur.com/eL7ZFOB.png')">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-xs-6 col-6">
+                    <div class="image-container">
+                        <img src="https://i.imgur.com/qVyZx0c.png" alt="" onclick="openResumeModal('https://i.imgur.com/qVyZx0c.png')">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-xs-6 col-6">
+                    <div class="image-container">
+                        <img src="https://i.imgur.com/T7r7rdv.png" alt="" onclick="openResumeModal('https://i.imgur.com/T7r7rdv.png')">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-xs-6 col-6">
+                    <div class="image-container">
+                        <img src="https://i.imgur.com/P7yyb64.png" alt="" onclick="openResumeModal('https://i.imgur.com/P7yyb64.png')">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-xs-6 col-6">
+                    <div class="image-container">
+                        <img src="https://i.imgur.com/y4W4P3p.png" alt="" onclick="openResumeModal('https://i.imgur.com/y4W4P3p.png')">
+                    </div>
+                </div>
+            </div>
+                     
+		</div>
+		<div class="modal fade" id="resumeModal" tabindex="-1" role="dialog" aria-labelledby="resumeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="#" class="img-fluid mx-auto d-block" id="resumeModalImage" alt="Modal Image">
+                        <p id="resumeModalDescription"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</section>
+
+	<section id="contact">
+		<div class="container">
+			<div class="banner-section">
+				<div class="info">
+					<h1>Contact.</h1>
+					<h3>Wanna talk? Sure! Get in touch with me via linked in or email.</h3>
+					<div class="icon-container">
+						<a href="https://www.linkedin.com/in/dianatorreshedz/" target="_blank">
+							<img src="https://i.imgur.com/R26DlMp.png" alt="LinkedIn">
+						</a>
+						<a href="mailto:diana.alessath@gmail.com" target="_blank">
+							<img src="https://i.imgur.com/gC37GjN.png" alt="Email">
+						</a>
+					</div>
+				</div>
+				<img class="contact-photo" src="https://i.imgur.com/PW0ARqq.png" alt="That's me!!">
+			</div>
+		</div>
+	</section>
+
+	<footer>
+		<div class="container">
+			<p>&copy; 2024 Diana Torres</p>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var sections = document.querySelectorAll("section");
+            var navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+
+            window.addEventListener("scroll", function() {
+                var current = "";
+                sections.forEach(function(section) {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - sectionHeight / 3) {
+                        current = section.getAttribute("id");
+                    }
+                });
+
+                navLinks.forEach(function(link) {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href").slice(1) === current) {
+                        link.classList.add("active");
+                    }
+                });
+            });
+        });
+		$(document).ready(function() {
+            $('#about').addClass('section-show');
+            $('a.nav-link').on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+                        window.location.hash = hash;
+                    });
+                }
+            });
+            $(window).scroll(function() {
+                var windowScroll = $(this).scrollTop();
+                $('section').each(function() {
+                    var sectionTop = $(this).offset().top - 400;
+                    if (windowScroll > sectionTop) {
+                        $(this).addClass('section-show');
+                    }
+                });
+            });
+
+        });
+        function openResumeModal(imageUrl, description) {
+            $('#resumeModalImage').attr('src', imageUrl);
+            $('#resumeModalDescription').text(description);
+            $('#resumeModal').modal('show');
+        }
+
+        function openPortfolioModal(imageURL, title, subtitle, description, link) {
+        var modalImage = document.getElementById('portfolioModalImage');
+        var modalTitle = document.getElementById('portfolioModalLabel');
+        var modalSubtitle = document.getElementById('portfolioModalSubtitle');
+        var modalDescription = document.getElementById('portfolioModalDescription');
+        var modalLink = document.getElementById('portfolioModalLink');
+
+        modalImage.src = imageURL;
+        modalTitle.textContent = title;
+        modalSubtitle.textContent = subtitle;
+        modalDescription.textContent = description;
+        modalLink.href = link;
+
+        $('#portfolioModal').modal('show');
+    }
+	</script>
+</body>
+</html>
